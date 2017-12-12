@@ -1,0 +1,32 @@
+<h1>Goal: <%=@goal.title%></h1>
+
+<p>Private?</p>
+
+<% if @goal.private %>
+    <p>Yes</p>
+<% else %>
+    <p>No</p>
+<% end %>
+
+<p>Details:</p>
+<p><%=@goal.details%></p>
+
+<p>Completed?</p>
+<% if @goal.completed %>
+    <p>Yes</p>
+<% else %>
+    <p>No</p>
+<% end %>
+
+<br />
+
+<%= render "shared/comments_form", commentables_comments: @goal.comments, commentable_id: @goal.id, commentable_type: "Goal" %>
+
+<form action="<%= goal_url(@goal) %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="Delete Goal">
+</form>
+
+<%= link_to "Edit Goal", edit_goal_url(@goal) %>
+<%= link_to "Back to User Profile", user_url(@goal.user_id) %>

@@ -1,0 +1,16 @@
+Create new user!
+
+<form action="/users" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+    <label for="user_email">Email</label>
+    <input type="text" name="user[email]" id="user_email">
+
+    <label for="user_password">Password</label>
+    <input type="password" name="user[password]" id="user_password">
+
+    <label for="user_cheer_count">Cheer Count</label>
+    <input type="number" name="user[cheer_count]" id="user_cheer_count">
+
+    <input type="submit" value="Create User">
+</form>

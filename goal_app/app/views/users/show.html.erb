@@ -1,0 +1,30 @@
+<% if @user == current_user %>
+    Welcome, <%= @user.email %>!
+
+    <br />
+
+    <%= link_to "View My Goals", goals_url %>
+<% else %>
+    Viewing <%= @user.email %>'s profile
+
+    <br />
+
+    <%= link_to "View Their Goals", goals_url %>
+<% end %>
+
+<br />
+
+<%= link_to "Browse Users", users_url %>
+
+<br />
+
+Goals:
+<ul>
+<% @user_goals.each do |goal |%>
+    <li><a href="<%= goal_url(goal) %>"><%= goal.title %></a></li>
+<% end %>
+</ul>
+
+<br />
+
+<%= render "shared/comments_form", commentable_id: @user.id, commentable_type: "User", commentables_comments: @user.comments %>
