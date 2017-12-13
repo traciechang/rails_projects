@@ -1,0 +1,7 @@
+<%= note.content %>
+<%= note.user.email %>
+<form action="<%= note_url(note) %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="Delete Note">
+</form>

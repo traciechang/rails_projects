@@ -1,0 +1,15 @@
+<h1><%= @band.name %><h1>
+
+<ul>
+    <% @band.albums.each do |album| %>
+        <li><%= link_to "#{album.title}", album_url(album.id) %></li>
+    <% end %>
+</ul>
+
+<%= link_to "Create New Album", new_band_album_url(@band) %>
+
+<form action=<%= band_url(@band) %> method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="authenticity_token" value=<%= form_authenticity_token %>>
+    <input type="submit" value="Delete Band">
+</form>

@@ -1,0 +1,19 @@
+<h1><%= @album.title %></h1>
+
+<%= link_to "Edit Album", edit_album_url(@album) %>
+
+<form action="<%=album_url(@album)%>" method="POST">
+    <input type="hidden" name="_method" value="delete">
+    <input type="hidden" name="authenticity_token" value=<%= form_authenticity_token %>>
+    <input type="submit" value="Delete Album">
+</form>
+
+<%= link_to "Back to Band", band_url(@album.band.id) %>
+
+<%= link_to "Add New Track", new_album_track_url(@album) %>
+
+<ul>
+<% @album.tracks.each do |track| %>
+    <li><a href="<%= track_url(track) %>"><%= track.title %></a></li>
+<% end %>
+</ul>
