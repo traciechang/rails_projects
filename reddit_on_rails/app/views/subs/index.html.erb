@@ -1,0 +1,13 @@
+<h1>Welcome to Pusheen's Forum!</h1>
+
+<h2>All Subs</h2>
+
+<% if current_user %>
+    <%= link_to "Create new sub", new_sub_url %>
+<% end %>
+
+<ul>
+    <% @subs.all.each do |sub| %>
+        <li><a href="<%= sub_url(sub) %>"><%= sub.title %></a></li>
+    <% end %>
+</ul>

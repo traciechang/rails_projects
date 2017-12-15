@@ -1,0 +1,12 @@
+<h1>Comment Show Page for: <%= @comment.body %></h1>
+
+<ul>
+    <% comments_by_parent_id = Post.find_by(id: @comment.post_id).comments_by_parent_id %>
+    
+    <% comments_by_parent_id[nil].each do |comment| %>
+        <li><a href="<%= comment_url(comment) %>"><%= comment.body %></a><%= render "comment", comments_by_parent_id: comments_by_parent_id, comment: comment %></li>
+    <% end %>
+</ul>
+
+Reply to this comment:
+<%= render "form", comment: @new_comment %>

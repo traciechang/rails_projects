@@ -1,0 +1,26 @@
+<h1><%= @post.title %>, by <%= @post.author.name %></h1>
+
+Content:
+<%= @post.content %>
+
+<br>
+
+Post Comments:
+
+<ul>
+<% @post_comments_top_level.each do |comment| %>
+    <li><a href="<%= comment_url(comment) %>"><%= comment.body %></a></li>
+<% end %>
+</ul>
+
+<br>
+
+<%= link_to "Create New Comment", new_post_comment_url(@post) %>
+
+<br>
+
+<%= link_to "Edit Post", edit_post_url(@post) %>
+
+<br>
+
+<%= link_to "Back to Homepage", subs_url %>

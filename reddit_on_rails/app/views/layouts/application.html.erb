@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RedditOnRails</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <% if current_user %>
+    <form action="<%= session_url %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+      <input type="submit" value="Log Out">
+    </form>
+  <% else %>
+    <%= link_to "Login", new_session_url %>
+  <% end %>
+
+  <%= link_to "Create an Account", new_user_url %>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
