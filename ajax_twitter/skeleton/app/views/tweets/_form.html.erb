@@ -1,0 +1,25 @@
+<h2>New Tweet!</h2>
+<form class="tweet-compose" data-tweets-ul="<%= tweets_ul %>">
+  <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+
+  <label>
+    Content
+    <textarea name="tweet[content]"></textarea>
+  </label>
+    <strong class="chars-left"></strong>
+  <br>
+
+  <script type="text/javascript">
+    window.users = <%= render("users/users.json.jbuilder", users: User.all).html_safe %>
+  </script>
+
+  <ul class="mentioned-users"></ul>
+  <button class="add-mentioned-user">Add mention</button>
+
+  
+
+  <input type="Submit" value="Post Tweet!">
+</form>
