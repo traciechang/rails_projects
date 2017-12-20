@@ -362,6 +362,7 @@ class InfiniteTweets {
         console.log(data);
 
         APIUtil.fetchTweets(data).then((data) => {
+            console.log(`Data:`, data);
             infiniteTweets.insertTweets(data);
 
             if (data.length < 5) {
@@ -389,8 +390,8 @@ class InfiniteTweets {
     }
 
     tweetElement(tweet) {
-        console.log(tweet.mentions);
-        const mentions = tweet.mentions.map(mention => `<li class='tweetee'><a href=`/users/$(mention.user.id)`>@${mention.user.username}</a></li>`).join("");
+        console.log("hi");
+        const mentions = tweet.mentions.map(mention => `<li class='tweetee'><a href="/users/${mention.user.id}">${mention.user.username}</a></li>`).join("");
 
         const element = `<li class="tweet">${tweet.content} -- <a href=/users/${tweet.user_id}>${tweet.user.username}</a> -- ${tweet.created_at}
         

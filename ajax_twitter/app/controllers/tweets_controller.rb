@@ -19,7 +19,7 @@ class TweetsController < ApplicationController
   end
 
   def index
-    @tweets = Tweet.al
+    @tweets = Tweet.all
     respond_to do |format|
       format.html { redirect_to request.referrer }
       format.json { render :index }

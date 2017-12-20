@@ -4,5 +4,5 @@
       json.username tweet.user.username
       json.mentioned_users tweet.mentioned_users
     end
-  end
+end
   
