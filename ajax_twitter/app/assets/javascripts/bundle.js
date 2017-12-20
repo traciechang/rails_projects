@@ -178,7 +178,7 @@ const APIUtil = {
     
     fetchTweets: data => {
         console.log("in ajax")
-        console.log($.ajax({
+        return $.ajax({
             url: '/feed',
             type: 'GET',
             dataType: 'JSON',
@@ -186,7 +186,7 @@ const APIUtil = {
             error: function(errMsg) {
                 console.log(errMsg);
             }
-        }))
+        })
     },
 
     followUser: id => {
@@ -281,7 +281,7 @@ class TweetCompose {
         this.$input.on("input", this.handleInput.bind(this));
         this.$mentionedUsersDiv = this.$el.find(".mentioned-users");
         this.$el.find(".add-mentioned-user").on("click",                            this.addMentionedUser.bind(this));
-        this.$mentionedUsersDiv.on("click", ".remove-mentioned-user",               this.removeMentionedUser.bind(this))
+        this.$mentionedUsersDiv.on("click", ".remove-mentioned-user",               this.removeMentionedUser.bind(this));
         this.$el.on("submit", this.submit.bind(this));
     }
 
@@ -303,12 +303,10 @@ class TweetCompose {
 
     handleSuccess(data) {
         const $tweetUl = $(this.$el.data("tweets-ul"));
-        const tweet = `${data.content}`
-        // const tweet = JSON.stringify(data)
-        const $li = $("<li></li>")
-        $tweetUl.append($li.append(tweet));
-
-        // $tweetUl.trigger("insert-tweet", data);
+        // const tweet = `${data.content}`
+        // const $li = $("<li></li>")
+        // $tweetUl.append($li.append(tweet));
+        $tweetUl.trigger("insert-tweet", data);
         this.clearInput();
     }
 
@@ -323,7 +321,6 @@ class TweetCompose {
 
     removeMentionedUser(event) {
         event.preventDefault();
-        console.log("removing mentioned user");
         $(event.currentTarget).parent().remove();
     }
 
@@ -349,6 +346,7 @@ class InfiniteTweets {
         this.$el = $(el);
         this.maxCreatedAt = null;
         this.$el.on("click", ".fetch-more", this.fetchTweets.bind(this));
+        this.$el.on("insert-tweet", this.insertTweet.bind(this));
     }
 
     fetchTweets(event) {
@@ -378,19 +376,26 @@ class InfiniteTweets {
         });
     }
 
+    insertTweet(event, tweet) {
+        this.$el.find("#feed").prepend(this.tweetElement(tweet));
+        if (!this.maxCreatedAt) {
+            this.maxCreatedAt = tweet.created_at;
+        }
+    }
+
     insertTweets(data) {
         console.log("in insertTweets")
         this.$el.find("#feed").append(data.map(this.tweetElement));
     }
 
     tweetElement(tweet) {
-        const mentions = tweet.mentions.map(mention => `<li class="tweetee"><a href=`/users/$(mention.user.id)`>@${mention.user.username}</a></li>`).join("");
+        console.log(tweet.mentions);
+        const mentions = tweet.mentions.map(mention => `<li class='tweetee'><a href=`/users/$(mention.user.id)`>@${mention.user.username}</a></li>`).join("");
 
-        const element = `<div class="tweet"><a href=/users/${tweet.user_id}>@${tweet.user.username}</a>
-        <p>${tweet.content}</p>
-        <ul>Mentions
-            ${mentions}</ul>
-        </div>`
+        const element = `<li class="tweet">${tweet.content} -- <a href=/users/${tweet.user_id}>${tweet.user.username}</a> -- ${tweet.created_at}
+        
+        <ul>${mentions}</ul>
+        </li>`
 
         return $(element);
     }

@@ -5,6 +5,7 @@ class InfiniteTweets {
         this.$el = $(el);
         this.maxCreatedAt = null;
         this.$el.on("click", ".fetch-more", this.fetchTweets.bind(this));
+        this.$el.on("insert-tweet", this.insertTweet.bind(this));
     }
 
     fetchTweets(event) {
@@ -34,19 +35,26 @@ class InfiniteTweets {
         });
     }
 
+    insertTweet(event, tweet) {
+        this.$el.find("#feed").prepend(this.tweetElement(tweet));
+        if (!this.maxCreatedAt) {
+            this.maxCreatedAt = tweet.created_at;
+        }
+    }
+
     insertTweets(data) {
         console.log("in insertTweets")
         this.$el.find("#feed").append(data.map(this.tweetElement));
     }
 
     tweetElement(tweet) {
-        const mentions = tweet.mentions.map(mention => `<li class="tweetee"><a href=`/users/$(mention.user.id)`>@${mention.user.username}</a></li>`).join("");
+        console.log(tweet.mentions);
+        const mentions = tweet.mentions.map(mention => `<li class='tweetee'><a href=`/users/$(mention.user.id)`>@${mention.user.username}</a></li>`).join("");
 
-        const element = `<div class="tweet"><a href=/users/${tweet.user_id}>@${tweet.user.username}</a>
-        <p>${tweet.content}</p>
-        <ul>Mentions
-            ${mentions}</ul>
-        </div>`
+        const element = `<li class="tweet">${tweet.content} -- <a href=/users/${tweet.user_id}>${tweet.user.username}</a> -- ${tweet.created_at}
+        
+        <ul>${mentions}</ul>
+        </li>`
 
         return $(element);
     }

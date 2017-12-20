@@ -10,7 +10,7 @@ const APIUtil = {
     
     fetchTweets: data => {
         console.log("in ajax")
-        console.log($.ajax({
+        return $.ajax({
             url: '/feed',
             type: 'GET',
             dataType: 'JSON',
@@ -18,7 +18,7 @@ const APIUtil = {
             error: function(errMsg) {
                 console.log(errMsg);
             }
-        }))
+        })
     },
 
     followUser: id => {

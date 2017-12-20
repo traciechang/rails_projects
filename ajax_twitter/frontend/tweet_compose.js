@@ -7,7 +7,7 @@ class TweetCompose {
         this.$input.on("input", this.handleInput.bind(this));
         this.$mentionedUsersDiv = this.$el.find(".mentioned-users");
         this.$el.find(".add-mentioned-user").on("click",                            this.addMentionedUser.bind(this));
-        this.$mentionedUsersDiv.on("click", ".remove-mentioned-user",               this.removeMentionedUser.bind(this))
+        this.$mentionedUsersDiv.on("click", ".remove-mentioned-user",               this.removeMentionedUser.bind(this));
         this.$el.on("submit", this.submit.bind(this));
     }
 
@@ -29,12 +29,10 @@ class TweetCompose {
 
     handleSuccess(data) {
         const $tweetUl = $(this.$el.data("tweets-ul"));
-        const tweet = `${data.content}`
-        // const tweet = JSON.stringify(data)
-        const $li = $("<li></li>")
-        $tweetUl.append($li.append(tweet));
-
-        // $tweetUl.trigger("insert-tweet", data);
+        // const tweet = `${data.content}`
+        // const $li = $("<li></li>")
+        // $tweetUl.append($li.append(tweet));
+        $tweetUl.trigger("insert-tweet", data);
         this.clearInput();
     }
 
@@ -49,7 +47,6 @@ class TweetCompose {
 
     removeMentionedUser(event) {
         event.preventDefault();
-        console.log("removing mentioned user");
         $(event.currentTarget).parent().remove();
     }
 
